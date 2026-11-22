@@ -39,6 +39,15 @@ app.post('/create-post', upload.single('image'), async (req, res, next) => {
   }
 });
 
+app.get(['/post', '/posts'], async (req, res, next) => {
+  try {
+    const posts = await postModel.find();
+    res.status(200).json(posts);
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.use((error, req, res, next) => {
   console.error(error);
 
@@ -52,8 +61,6 @@ app.use((error, req, res, next) => {
 
   res.status(500).json({ message: error.message });
 });
-
-
 
 
 module.exports = app;
