@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Feed = () => {
   const [posts, setPosts] = useState([
@@ -9,6 +10,17 @@ const Feed = () => {
         image: "https://via.placeholder.com/150",
       }
   ]);
+
+    useEffect(() => {
+        axios.get("http://localhost:3000/posts")
+            .then((response) => {
+                console.log(response.data);
+                setPosts(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching posts:", error);
+            });
+    }, []);
 
   return (
     <section>
